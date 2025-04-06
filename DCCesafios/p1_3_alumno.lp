@@ -26,6 +26,15 @@ size_of_team(T , Size) :- team(T), #count {S : assign(S,T)} = Size.
 
 :- team(T), #count { S : assign(S, T), gender(S, f) } >= 8.
 
+% Nueva instrucción: No puede haber un equipo con 4 o más mujeres
+% al mismo tiempo que existen equipos con 0 mujeres.
+
+% Para saber si no hay mujeres: team(T), #count { S : assign(S, T), gender(S, f) } = 0.
+% Para asegurarnos que no hayan 4 o más mujeres debemos poner la condición
+% team(T), #count { S : assign(S, T), gender(S, f) } >= 4
+
+:- team(T), #count { S : assign(S, T), gender(S, f) } >= 4, team(T), #count { S : assign(S, T), gender(S, f) } = 0.
+
 :- team(T), size_of_team(T, Size), Size > 8. 
 :- team(T), size_of_team(T, Size), Size < 7. 
 
